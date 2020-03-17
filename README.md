@@ -6,3 +6,12 @@ yarn global add parcel-bundler
 或
 npm install -g parcel-bundler
 ```
+
+### tsconfig
+```
+  "compilerOptions": {
+    "jsx": "preserve"
+  }
+```
+保留jsx交给babel操作
+
