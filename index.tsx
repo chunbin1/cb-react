@@ -1,5 +1,5 @@
 import { createElement, render } from "./cb-react";
-console.log(createElement)
+// console.log(createElement,render)
 const A = () => {
   return <div className="hello">hello</div>;
 };
@@ -8,4 +8,4 @@ console.log(A);
 
 console.log(<A />);
 
-// Cbreact.render(<A/>,document.getElementById('root'))
+render(<A />, document.getElementById("root"));

@@ -1,11 +1,7 @@
-### a mini-react 
+## a mini-react 
 
-使用parcel-bundler打包,如果你想开发，可以使用
-```
-yarn global add parcel-bundler
-或
-npm install -g parcel-bundler
-```
+### 放弃使用parcel的原因 
+它对ts支持有问题，打包出来的东西不对头:https://github.com/parcel-bundler/parcel/issues/1095
 
 ### tsconfig
 ```
