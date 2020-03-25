@@ -1,20 +1,15 @@
-// interface Icbreact {
-//   createElement?: Function;
-//   render?: Function;
-// }
-
-// let Cbreact: Icbreact = {};
+type Child = Array<Vdom | string | number | boolean>;
 
 interface Vdom {
   type: string | Function;
   config?: any;
-  children?: Array<Vdom | string | number | boolean>;
+  children?: Child;
 }
 
 export const createElement = (
   type: string,
   config: any,
-  ...children: Array<Vdom | string | number | boolean>
+  ...children: Child
 ): Vdom => {
   return {
     type,
@@ -54,9 +49,8 @@ const renderElement = (
 };
 
 const renderFuntion = (Vdom: Vdom) => {
-  const { type,} = Vdom;
-
-  return renderDOM(type());
+  const { type } = Vdom;
+  return renderDOM((<Function>type)());
 };
 
 const renderDOM = (Vdom: Vdom) => {
