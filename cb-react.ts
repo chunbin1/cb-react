@@ -5,18 +5,17 @@
 
 // let Cbreact: Icbreact = {};
 
-interface cbreactDom {
+interface Vdom {
   type: string | Function;
   config?: any;
-  children?: cbreactDom | cbreactDom[] | string;
+  children?: Array<Vdom | string | number | boolean>;
 }
 
 export const createElement = (
   type: string,
   config: any,
-  ...children: cbreactDom[]
-): cbreactDom => {
-  console.log(type);
+  ...children: Array<Vdom | string | number | boolean>
+): Vdom => {
   return {
     type,
     config,
@@ -24,25 +23,43 @@ export const createElement = (
   };
 };
 
-export const render = (Vdom: cbreactDom, root: HTMLElement) => {
-  const { type } = Vdom;
-  let dom;
-  if (typeof type === "function") {
-    dom = renderFuntions(Vdom);
-  } else {
-    dom = renderDOM(Vdom);
-  }
-
+export const render = (
+  Vdom: Vdom | string | number | boolean,
+  root: HTMLElement
+) => {
+  let dom = renderElement(Vdom);
   root.appendChild(dom);
 };
 
-const renderFuntions = (Vdom: cbreactDom) => {
-  const { type, config } = Vdom;
-
-  return renderDOM(type(config));
+const renderElement = (
+  Vdom: Vdom | string | number | boolean
+): HTMLElement | Text => {
+  // 基础类型转换
+  if (typeof Vdom === "boolean" || Vdom === null || Vdom === undefined) {
+    return document.createTextNode("");
+  }
+  if (typeof Vdom === "number") {
+    return document.createTextNode(String(Vdom));
+  }
+  if (typeof Vdom === "string") {
+    return document.createTextNode(Vdom);
+  }
+  const { type } = Vdom;
+  if (typeof type === "string") {
+    return renderDOM(Vdom);
+  }
+  if (typeof type === "function") {
+    return renderFuntion(Vdom);
+  }
 };
 
-const renderDOM = (Vdom: cbreactDom) => {
+const renderFuntion = (Vdom: Vdom) => {
+  const { type,} = Vdom;
+
+  return renderDOM(type());
+};
+
+const renderDOM = (Vdom: Vdom) => {
   const { type, config, children } = Vdom;
 
   const dom = document.createElement(type as string);
@@ -50,6 +67,10 @@ const renderDOM = (Vdom: cbreactDom) => {
     Object.keys(config).map(name => {
       setAttribute(dom, name, config[name]);
     });
+  }
+  for (let i = 0; i < children.length; i += 1) {
+    const childDom = renderElement(children[i]);
+    dom.appendChild(childDom);
   }
   return dom;
 };

@@ -1,11 +1,24 @@
 import { createElement, render } from "./cb-react";
 // console.log(createElement,render)
-const A = () => {
-  return <div className="hello">hello</div>;
-};
+const A = (
+  <div className="hello">
+    你好啊
+  </div>
+);
+
+const B = () => {
+  return <div className="fc">
+    函数组件
+    <a href="wwfw">你好啊</a>
+  </div>
+}
+
+
+const C = <div></div>;
 
 console.log(A);
+console.log(C);
 
-console.log(<A />);
+// console.log(<A />);
 
-render(<A />, document.getElementById("root"));
+render(<B/>, document.getElementById("root"));

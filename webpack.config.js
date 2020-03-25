@@ -11,7 +11,7 @@ const commonConfig = {
     filename: '[name]-[hash].bundle.js',
   },
   resolve: {
-    // 我们导入ts 等模块一般不写后缀名，webpack 会尝试使用这个数组提供的后缀名去导入
+    // 后缀
     extensions: ['.ts', '.tsx', '.js', '.json'],
   },
   module: {
