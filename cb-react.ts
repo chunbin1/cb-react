@@ -1,4 +1,5 @@
-type Child = Array<Vdom | string | number | boolean>;
+type BasicElement = Vdom | string | number | boolean;
+type Child = Array<BasicElement>;
 
 interface Vdom {
   type: string | Function;
@@ -18,33 +19,33 @@ export const createElement = (
   };
 };
 
-export const render = (
-  Vdom: Vdom | string | number | boolean,
-  root: HTMLElement
-) => {
+export const render = (Vdom: Vdom, root: HTMLElement) => {
   let dom = renderElement(Vdom);
   root.appendChild(dom);
 };
 
-const renderElement = (
-  Vdom: Vdom | string | number | boolean
-): HTMLElement | Text => {
+const renderElement = (basicElement: BasicElement): HTMLElement | Text => {
   // 基础类型转换
-  if (typeof Vdom === "boolean" || Vdom === null || Vdom === undefined) {
+  if (
+    typeof basicElement === "boolean" ||
+    basicElement === null ||
+    basicElement === undefined
+  ) {
     return document.createTextNode("");
   }
-  if (typeof Vdom === "number") {
-    return document.createTextNode(String(Vdom));
+  if (typeof basicElement === "number") {
+    return document.createTextNode(String(basicElement));
   }
-  if (typeof Vdom === "string") {
-    return document.createTextNode(Vdom);
+  if (typeof basicElement === "string") {
+    return document.createTextNode(basicElement);
   }
-  const { type } = Vdom;
+  // 是Vdom
+  const { type } = basicElement;
   if (typeof type === "string") {
-    return renderDOM(Vdom);
+    return renderDOM(basicElement);
   }
   if (typeof type === "function") {
-    return renderFuntion(Vdom);
+    return renderFuntion(basicElement);
   }
 };
 
