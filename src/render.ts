@@ -1,28 +1,9 @@
-type BasicElement = Vdom | string | number | boolean;
-type Child = Array<BasicElement>;
+import { Vdom, BasicElement } from "./types";
 
-interface Vdom {
-  type: string | Function;
-  config?: any;
-  children?: Child;
-}
-
-export const createElement = (
-  type: string,
-  config: any,
-  ...children: Child
-): Vdom => {
-  return {
-    type,
-    config,
-    children
-  };
-};
-
-export const render = (Vdom: Vdom, root: HTMLElement) => {
+export default function render(Vdom: Vdom, root: HTMLElement) {
   let dom = renderElement(Vdom);
   root.appendChild(dom);
-};
+}
 
 const renderElement = (basicElement: BasicElement): HTMLElement | Text => {
   // 基础类型转换
@@ -51,7 +32,7 @@ const renderElement = (basicElement: BasicElement): HTMLElement | Text => {
 
 const renderFuntion = (Vdom: Vdom) => {
   const { type } = Vdom;
-  return renderDOM((<Function>type)());
+  return renderDOM((<Function>type)()); // 两种写法 (type as Functions)()
 };
 
 const renderDOM = (Vdom: Vdom) => {
@@ -59,7 +40,7 @@ const renderDOM = (Vdom: Vdom) => {
 
   const dom = document.createElement(type as string);
   if (Object.keys(config).length > 0) {
-    Object.keys(config).map(name => {
+    Object.keys(config).map((name) => {
       setAttribute(dom, name, config[name]);
     });
   }

@@ -1,4 +1,4 @@
-import { createElement, render } from "./cb-react";
+import { createElement, render } from "./src";
 // console.log(createElement,render)
 const A = (
   <div className="hello">
