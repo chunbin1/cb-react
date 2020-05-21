@@ -6,3 +6,11 @@ export interface Vdom {
   config?: any;
   children?: Child;
 }
+
+export interface Fiber {
+  container: HTMLElement;
+  props?: Object;
+  child?: BasicElement;
+  sibling?: Vdom;
+  parent?: Vdom;
+}

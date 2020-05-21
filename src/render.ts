@@ -1,9 +1,24 @@
-import { Vdom, BasicElement } from "./types";
+import { Vdom, BasicElement, Fiber } from "./types";
+import { workLoop } from "./scheduler";
+
+// 我们采用 requestIdleCallback 这个API去做调度器 这个API兼容性不好 后续再替代
+export let nextUnitOfWork: null | Fiber = null;
 
 export default function render(Vdom: Vdom, root: HTMLElement) {
-  let dom = renderElement(Vdom);
-  root.appendChild(dom);
+  console.log(Vdom);
+  // 创建下个任务
+  nextUnitOfWork = {
+    container: root,
+    child: Vdom,
+  };
+  // 创建根fiber节点，并指定下一次nextUnitOfWork
+  //  =
+  // let dom = renderElement(Vdom);
+  // root.appendChild(dom);
 }
+
+// 有空闲就进去workLoop 循环执行下一个任务
+window.requestIdleCallback(workLoop);
 
 const renderElement = (basicElement: BasicElement): HTMLElement | Text => {
   // 基础类型转换

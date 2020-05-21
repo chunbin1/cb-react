@@ -1,13 +1,21 @@
-## a mini-react 
+# a mini-react
 
-### 放弃使用parcel的原因 
-它对ts支持有问题，打包出来的东西不对头:https://github.com/parcel-bundler/parcel/issues/1095
+## Todo
 
-### tsconfig
+[X] 函数渲染
+[] 调度器和 fiber
+[] class 渲染
+
+## 放弃使用 parcel 的原因
+
+它对 ts 支持有问题，打包出来的东西不对头:https://github.com/parcel-bundler/parcel/issues/1095
+
+## tsconfig
+
 ```
   "compilerOptions": {
     "jsx": "preserve"
   }
 ```
-保留jsx交给babel操作
 
+保留 jsx 交给 babel 操作
