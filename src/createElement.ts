@@ -1,20 +1,19 @@
-type BasicElement = Vdom | string | number | boolean;
-type Child = Array<BasicElement>;
+import { Vdom, ChildArr } from './types';
 
-interface Vdom {
-  type: string | Function;
-  config?: any;
-  children?: Child;
-}
-
-export default function createElement(
-  type: string,
-  config: any,
-  ...children: Child
-): Vdom {
+export default function createElement(type: string, config: any, ...children: ChildArr): Vdom {
   return {
     type,
-    config,
-    children,
+    props: {
+      ...config,
+      children: children.map((child) => {
+        return typeof child === 'object' ? child : createText(child);
+      }),
+    },
   };
+}
+
+export const TEXT_TYPE = Symbol('text');
+
+export function createText(vnode: string): Vdom {
+  return { type: TEXT_TYPE, props: { children: [], nodeValue: vnode } };
 }

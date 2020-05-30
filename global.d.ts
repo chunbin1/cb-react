@@ -4,17 +4,17 @@ type RequestIdleCallbackOptions = {
 };
 export type RequestIdleCallbackDeadline = {
   readonly didTimeout: boolean;
-  timeRemaining: (() => number);
+  timeRemaining: () => number;
 };
 
 declare global {
   interface Window {
-    requestIdleCallback: ((
-      callback: ((deadline: RequestIdleCallbackDeadline) => void),
+    requestIdleCallback: (
+      callback: (deadline: RequestIdleCallbackDeadline) => void,
       opts?: RequestIdleCallbackOptions,
-    ) => RequestIdleCallbackHandle);
-    cancelIdleCallback: ((handle: RequestIdleCallbackHandle) => void);
+    ) => RequestIdleCallbackHandle;
+    cancelIdleCallback: (handle: RequestIdleCallbackHandle) => void;
   }
 }
 
-export {}
+export {};
