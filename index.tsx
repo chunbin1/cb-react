@@ -19,4 +19,4 @@ const A = (
 );
 console.log(A);
 
-// render(<B />, document.getElementById('root'));
+render(A, document.getElementById('root'));
